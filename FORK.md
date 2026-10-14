@@ -5,9 +5,9 @@ Keep each change small, so that upstream merges stay clean.
 
 ## Local changes
 
-- `implement` and `implement-spec` end with a **prove it works** step: a fresh subagent runs
-  the repo's verification skill (`verify-*`) and returns a verdict. One implementer, with
-  `implement`, fixes every defect that the change causes, then a fresh subagent proves it again.
+- `implement` and `implement-spec` end with **prove it works**: a fresh subagent runs the
+  repo's `verify-*` skill and returns a verdict. One implementer fixes the change's defects,
+  and a fresh subagent proves the new head, until it passes.
 
 ## Get upstream changes
 
