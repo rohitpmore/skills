@@ -35,6 +35,12 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 
 7. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch. Fix all issues raised by the code review in a single **implementer subagent**.
 
-8. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch.
+8. Prove it works. If the repo has a project verification skill (a `verify-*` skill, or one that `AGENTS.md` or `CLAUDE.md` names), start a fresh **verifier subagent** that calls the Skill tool with it. The verifier did not write the code, and it gets only pointers: the spec, the PR or integration branch, and the head SHA. It proves on the real surface the behaviour that the spec asks for, and returns `PASS`, `PASS+NOTES` or `FAIL` with evidence for every defect it can prove. Post the verdict on the PR with the SHA. "Inconclusive" is not a pass.
+   - A defect that the default branch shows without this work: file it as a new issue in the issue tracker. It does not block.
+   - Every defect that this work causes: give them all to one **implementer subagent**, which calls the Skill tool with `implement`. Tell it that you prove the work. Then prove it works again with a fresh verifier at the new head, until the verdict is a pass.
 
-9. Clean up all **implementer subagent** worktrees.
+   With no verification skill, say in the report that the work is not proven.
+
+9. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch.
+
+10. Clean up all **implementer subagent** worktrees.
