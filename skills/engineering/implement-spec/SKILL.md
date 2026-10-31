@@ -27,15 +27,16 @@ Communication to and from subagents should be sparse. Communicate primarily thro
 4. Use **implementer subagents** to implement each ticket, each in its own worktree on its own branch. Each implementer subagent:
    - confirms its worktree is based on the integration branch before starting, and resets onto it if not;
    - calls the Skill tool with `tdd` to build the ticket;
+   - leaves the proof to you: the spec is proven once, in step 8;
    - merges the integration branch tip into its own branch before reporting done
 
 5. Once an **implementer subagent** completes, merge its work to the integration branch with a **merger subagent**.
 
 6. If this changes the **frontier** of available tickets, kick off more **implementer subagents** to work on the new tickets. This allows for maximum concurrency.
 
-7. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch. Fix all issues raised by the code review in a single **implementer subagent**.
+7. Once all tickets are complete, call the Skill tool with `code-review` on the integration branch. Fix all issues raised by the code review in a single **implementer subagent**, which leaves the proof to you.
 
-8. Prove it works. If the repo has a verification skill (`verify-*`, or one that `AGENTS.md` or `CLAUDE.md` names), start a fresh **verifier subagent** with it, and pass only pointers: the spec, the PR or integration branch, and the head SHA. It returns a verdict, `PASS`, `PASS+NOTES` or `FAIL`, with every defect it can prove. On `FAIL`, give every defect that it assigns to this work to one **implementer subagent**, which calls the Skill tool with `implement` and leaves the proof to you. Then prove the new head with a fresh verifier, until it passes. With no verification skill, report the work as not proven.
+8. Prove the spec. If the repo has a verification skill (`verify-*`, or one that `AGENTS.md` or `CLAUDE.md` names), start a fresh **verifier subagent** with it, and pass only pointers: the spec, the PR or integration branch, the base SHA (the merge-base with main) and the head SHA. Its scope is the whole spec's diff from base to head: it proves what that diff touches. A full end-to-end run and video recordings run only when the user asks for them. It returns a verdict, `PASS`, `PASS+NOTES` or `FAIL`, with every defect it can prove. On `FAIL`, give every defect that it assigns to this work to one **implementer subagent**, which calls the Skill tool with `implement` and leaves the proof to you. Then prove the new head with a fresh verifier, until it passes. With no verification skill, report the work as not proven.
 
 9. If a draft PR exists, mark it ready for review. Otherwise, resolve each ticket the way the issue tracker closes work, and report the integration branch.
 

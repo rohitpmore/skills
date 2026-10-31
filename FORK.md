@@ -6,8 +6,10 @@ Keep each change small, so that upstream merges stay clean.
 ## Local changes
 
 - `implement` and `implement-spec` end with **prove it works**: a fresh subagent runs the
-  repo's `verify-*` skill and returns a verdict. One implementer fixes the change's defects,
-  and a fresh subagent proves the new head, until it passes.
+  repo's `verify-*` skill on the diff from base to head and returns a verdict. One
+  implementer fixes the change's defects, and a fresh subagent proves the new head, until
+  it passes. Under `implement-spec`, implementers leave the proof to it: the whole spec is
+  proven once, at the end. A full end-to-end run or video runs only when the user asks.
 
 ## Get upstream changes
 
