@@ -22,7 +22,7 @@ git merge <tag>                               # resolve conflicts in the local c
 git push
 ```
 
-Based on: v1.3.1.
+Based on: v1.3.2.
 
 Then, in each project: `npx skills update -p -y`.
 
